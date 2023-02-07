@@ -15,6 +15,7 @@ func (li usersList) findById(userId int64) (bool, *User) {
 	user, v := li[userId]
 	return v, user
 }
+
 func GetUserById(userId int64) (*User, error) {
 	found, user := users.findById(userId)
 	if !found {
