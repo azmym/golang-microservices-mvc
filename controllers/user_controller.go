@@ -2,8 +2,8 @@ package controllers
 
 import (
 	"encoding/json"
-	"golang-microservices-mvc/v2/services"
-	"golang-microservices-mvc/v2/utils"
+	"golang-microservices-mvc/services"
+	"golang-microservices-mvc/utils"
 	"net/http"
 	"strconv"
 )

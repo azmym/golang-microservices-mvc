@@ -1,7 +1,7 @@
 package main
 
 import (
-	"golang-microservices-mvc/v1/app"
+	"golang-microservices-mvc/app"
 )
 
 func main() {

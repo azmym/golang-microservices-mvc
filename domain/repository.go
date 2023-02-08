@@ -2,7 +2,7 @@ package domain
 
 import (
 	"fmt"
-	"golang-microservices-mvc/v2/utils"
+	"golang-microservices-mvc/utils"
 	"net/http"
 )
 
