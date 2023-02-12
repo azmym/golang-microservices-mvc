@@ -8,7 +8,19 @@ import (
 	"strconv"
 )
 
-func GetUser(res http.ResponseWriter, req *http.Request) {
+type (
+	userControllerInterface interface {
+		GetUser(http.ResponseWriter, *http.Request)
+	}
+	userController struct {
+	}
+)
+
+var (
+	UserController userController
+)
+
+func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
 	//grab the user_id
 	userIdParam := req.URL.Query().Get("user_id")
 	//validate the user_id
@@ -24,7 +36,7 @@ func GetUser(res http.ResponseWriter, req *http.Request) {
 		res.Write(errorResp)
 		return
 	}
-	user, apiErr := services.GetUserById(userId)
+	user, apiErr := services.UserService.GetUserById(userId)
 	if apiErr != nil {
 		errorResp, _ := json.Marshal(apiErr)
 		res.WriteHeader(apiErr.StatusCode)

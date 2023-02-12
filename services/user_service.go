@@ -5,6 +5,17 @@ import (
 	"golang-microservices-mvc/utils"
 )
 
-func GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
-	return domain.GetUserById(userId)
+var (
+	UserService userServiceInterface
+)
+
+type (
+	userServiceInterface interface {
+		GetUserById(int64) (*domain.User, *utils.ApplicationError)
+	}
+	userService struct{}
+)
+
+func (us *userService) GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
+	return domain.UserRepository.GetUserById(userId)
 }
