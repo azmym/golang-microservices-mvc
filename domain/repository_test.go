@@ -22,7 +22,6 @@ func TestFindByIdIUserExist(t *testing.T) {
 	assert.EqualValues(t, 123, user.Id)
 }
 
-// ///////////////////////
 func TestGetUserByIdNotExist(t *testing.T) {
 	repository := UserRepository{}
 	user, applicationError := repository.FindUserById(0)
