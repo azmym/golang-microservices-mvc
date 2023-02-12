@@ -9,18 +9,15 @@ import (
 )
 
 type (
-	userControllerInterface interface {
+	UserControllerInterface interface {
 		GetUser(http.ResponseWriter, *http.Request)
 	}
-	userController struct {
+	UserController struct {
+		UserService services.UserServiceInterface
 	}
 )
 
-var (
-	UserController userController
-)
-
-func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
+func (uc *UserController) GetUser(res http.ResponseWriter, req *http.Request) {
 	//grab the user_id
 	userIdParam := req.URL.Query().Get("user_id")
 	//validate the user_id
@@ -36,7 +33,7 @@ func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
 		res.Write(errorResp)
 		return
 	}
-	user, apiErr := services.UserService.GetUserById(userId)
+	user, apiErr := uc.UserService.GetUserById(userId)
 	if apiErr != nil {
 		errorResp, _ := json.Marshal(apiErr)
 		res.WriteHeader(apiErr.StatusCode)

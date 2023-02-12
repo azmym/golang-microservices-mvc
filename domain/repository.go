@@ -8,10 +8,11 @@ import (
 
 type (
 	usersList               map[int64]*User
-	userRepositoryInterface interface {
-		GetUserById(int64) (*User, *utils.ApplicationError)
+	UserRepositoryInterface interface {
+		FindUserById(int64) (*User, *utils.ApplicationError)
 	}
-	userRepository struct{}
+	UserRepository struct {
+	}
 )
 
 var (
@@ -21,7 +22,6 @@ var (
 		125: {Id: 125, FirstName: "Hello", LastName: "world3", Email: "Hello_world3@yahoo.com"},
 		126: {Id: 126, FirstName: "Hello", LastName: "world4", Email: "Hello_world4@yahoo.com"},
 	}
-	UserRepository userRepositoryInterface
 )
 
 func (li usersList) findById(userId int64) (bool, *User) {
@@ -29,7 +29,7 @@ func (li usersList) findById(userId int64) (bool, *User) {
 	return v, user
 }
 
-func (ur *userRepository) GetUserById(userId int64) (*User, *utils.ApplicationError) {
+func (*UserRepository) FindUserById(userId int64) (*User, *utils.ApplicationError) {
 	found, user := users.findById(userId)
 	if !found {
 		return nil, &utils.ApplicationError{
