@@ -2,17 +2,18 @@ package controllers
 
 import (
 	"encoding/json"
+	"github.com/spf13/cast"
 	"golang-microservices-mvc/services"
 	"golang-microservices-mvc/utils"
 	"net/http"
-	"strconv"
 )
 
 func GetUser(res http.ResponseWriter, req *http.Request) {
 	//grab the user_id
 	userIdParam := req.URL.Query().Get("user_id")
 	//validate the user_id
-	userId, err := strconv.ParseInt(userIdParam, 10, 64)
+	userId, err := cast.ToInt64E(userIdParam)
+	///
 	if err != nil {
 		apiErr := utils.ApplicationError{
 			Message:    "user_id should be int.",
