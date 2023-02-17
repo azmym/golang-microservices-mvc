@@ -12,12 +12,19 @@ type (
 	UserControllerInterface interface {
 		GetUser(http.ResponseWriter, *http.Request)
 	}
-	UserController struct {
-		UserService services.UserServiceInterface
+	userController struct {
 	}
 )
 
-func (uc *UserController) GetUser(res http.ResponseWriter, req *http.Request) {
+var (
+	UserController UserControllerInterface
+)
+
+func init() {
+	UserController = &userController{}
+}
+
+func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
 	//grab the user_id
 	userIdParam := req.URL.Query().Get("user_id")
 	//validate the user_id
@@ -33,7 +40,7 @@ func (uc *UserController) GetUser(res http.ResponseWriter, req *http.Request) {
 		res.Write(errorResp)
 		return
 	}
-	user, apiErr := uc.UserService.GetUserById(userId)
+	user, apiErr := services.UserService.GetUserById(userId)
 	if apiErr != nil {
 		errorResp, _ := json.Marshal(apiErr)
 		res.WriteHeader(apiErr.StatusCode)

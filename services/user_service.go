@@ -9,11 +9,19 @@ type (
 	UserServiceInterface interface {
 		GetUserById(int64) (*domain.User, *utils.ApplicationError)
 	}
-	UserService struct {
-		UserRepository domain.UserRepositoryInterface
+	userService struct {
 	}
 )
 
-func (us UserService) GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
-	return us.UserRepository.FindUserById(userId)
+var (
+	UserService UserServiceInterface
+)
+
+func init() {
+	UserService = &userService{}
+}
+
+func (us *userService) GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
+	repository := domain.UserRepository
+	return repository.FindUserById(userId)
 }

@@ -11,7 +11,7 @@ type (
 	UserRepositoryInterface interface {
 		FindUserById(int64) (*User, *utils.ApplicationError)
 	}
-	UserRepository struct {
+	userRepository struct {
 	}
 )
 
@@ -22,14 +22,20 @@ var (
 		125: {Id: 125, FirstName: "Hello", LastName: "world3", Email: "Hello_world3@yahoo.com"},
 		126: {Id: 126, FirstName: "Hello", LastName: "world4", Email: "Hello_world4@yahoo.com"},
 	}
+	//expose the struct outside of the package
+	UserRepository UserRepositoryInterface
 )
 
+// initialize the UserRepository
+func init() {
+	UserRepository = &userRepository{}
+}
 func (li usersList) findById(userId int64) (bool, *User) {
 	user, v := li[userId]
 	return v, user
 }
 
-func (*UserRepository) FindUserById(userId int64) (*User, *utils.ApplicationError) {
+func (ur *userRepository) FindUserById(userId int64) (*User, *utils.ApplicationError) {
 	found, user := users.findById(userId)
 	if !found {
 		return nil, &utils.ApplicationError{
