@@ -22,6 +22,5 @@ func init() {
 }
 
 func (us *userService) GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
-	repository := domain.UserRepository
-	return repository.FindUserById(userId)
+	return domain.UserRepository.FindUserById(userId)
 }
