@@ -9,24 +9,12 @@ import (
 	"testing"
 )
 
-type (
-	userRepositoryMock struct{}
-)
-
-var (
-	findUserByIdFunc func(userId int64) (*domain.User, *utils.ApplicationError)
-)
-
-func (*userRepositoryMock) FindUserById(userId int64) (*domain.User, *utils.ApplicationError) {
-	return findUserByIdFunc(userId)
-}
-
 func init() {
-	domain.UserRepository = &userRepositoryMock{}
+	domain.UserRepository = &UserRepositoryMock{}
 }
 func TestGetUserByIdIfUserNotExist(test *testing.T) {
 	//given
-	findUserByIdFunc = func(userId int64) (*domain.User, *utils.ApplicationError) {
+	FindUserByIdFunc = func(userId int64) (*domain.User, *utils.ApplicationError) {
 		return nil, &utils.ApplicationError{
 			Message:    fmt.Sprintf("there is no user with id= %v", userId),
 			StatusCode: http.StatusNotFound,
@@ -45,7 +33,7 @@ func TestGetUserByIdIfUserNotExist(test *testing.T) {
 
 func TestGetUserByIdIfUserExist(test *testing.T) {
 	//given
-	findUserByIdFunc = func(userId int64) (*domain.User, *utils.ApplicationError) {
+	FindUserByIdFunc = func(userId int64) (*domain.User, *utils.ApplicationError) {
 		return &domain.User{
 			Id:        1,
 			FirstName: "Test",
