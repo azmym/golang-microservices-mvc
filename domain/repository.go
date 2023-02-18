@@ -23,13 +23,9 @@ var (
 		126: {Id: 126, FirstName: "Hello", LastName: "world4", Email: "Hello_world4@yahoo.com"},
 	}
 	//expose the struct outside of the package
-	UserRepository UserRepositoryInterface
+	UserRepository UserRepositoryInterface = &userRepository{}
 )
 
-// initialize the UserRepository
-func init() {
-	UserRepository = &userRepository{}
-}
 func (li usersList) findById(userId int64) (bool, *User) {
 	user, v := li[userId]
 	return v, user

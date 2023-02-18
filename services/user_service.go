@@ -14,12 +14,8 @@ type (
 )
 
 var (
-	UserService UserServiceInterface
+	UserService UserServiceInterface = &userService{}
 )
-
-func init() {
-	UserService = &userService{}
-}
 
 func (us *userService) GetUserById(userId int64) (*domain.User, *utils.ApplicationError) {
 	repository := domain.UserRepository

@@ -17,12 +17,8 @@ type (
 )
 
 var (
-	UserController UserControllerInterface
+	UserController UserControllerInterface = &userController{}
 )
-
-func init() {
-	UserController = &userController{}
-}
 
 func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
 	//grab the user_id
