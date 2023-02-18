@@ -2,10 +2,12 @@ package controllers
 
 import (
 	"encoding/json"
+	"net/http"
+
 	"github.com/spf13/cast"
+
 	"golang-microservices-mvc/services"
 	"golang-microservices-mvc/utils"
-	"net/http"
 )
 
 type (
