@@ -2,16 +2,19 @@ package services
 
 import (
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"golang-microservices-mvc/domain"
-	"golang-microservices-mvc/utils"
 	"net/http"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"golang-microservices-mvc/domain"
+	"golang-microservices-mvc/utils"
 )
 
 func init() {
 	domain.UserRepository = &UserRepositoryMock{}
 }
+
 func TestGetUserByIdIfUserNotExist(test *testing.T) {
 	//given
 	FindUserByIdFunc = func(userId int64) (*domain.User, *utils.ApplicationError) {

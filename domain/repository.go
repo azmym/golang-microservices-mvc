@@ -2,8 +2,9 @@ package domain
 
 import (
 	"fmt"
-	"golang-microservices-mvc/utils"
 	"net/http"
+
+	"golang-microservices-mvc/utils"
 )
 
 type (
@@ -30,6 +31,7 @@ var (
 func init() {
 	UserRepository = &userRepository{}
 }
+
 func (li usersList) findById(userId int64) (bool, *User) {
 	user, v := li[userId]
 	return v, user

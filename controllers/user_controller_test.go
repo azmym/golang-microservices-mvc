@@ -3,14 +3,16 @@ package controllers
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/stretchr/testify/assert"
-	"golang-microservices-mvc/domain"
-	"golang-microservices-mvc/services"
-	"golang-microservices-mvc/utils"
 	"io"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
+
+	"golang-microservices-mvc/domain"
+	"golang-microservices-mvc/services"
+	"golang-microservices-mvc/utils"
 )
 
 func init() {
