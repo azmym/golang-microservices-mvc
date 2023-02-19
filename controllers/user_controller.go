@@ -33,19 +33,19 @@ func (uc *userController) GetUser(c *gin.Context) {
 	userId, err := cast.ToInt64E(userIdParam)
 	///
 	if err != nil {
-		apiErr := utils.ApplicationError{
+		apiErr := &utils.ApplicationError{
 			Message:    "user_id should be int.",
 			StatusCode: http.StatusBadRequest,
 			Code:       "bad_request",
 		}
-		c.JSON(apiErr.StatusCode, apiErr)
+		utils.ResponseError(c, apiErr)
 		return
 	}
 	user, apiErr := services.UserService.GetUserById(userId)
 	if apiErr != nil {
-		c.JSON(apiErr.StatusCode, apiErr)
+		utils.ResponseError(c, apiErr)
 		return
 	}
 	//Marshal
-	c.JSON(http.StatusOK, user)
+	utils.Response(c, http.StatusOK, user)
 }
