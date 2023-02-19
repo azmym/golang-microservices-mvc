@@ -1,9 +1,9 @@
 package controllers
 
 import (
-	"encoding/json"
 	"net/http"
 
+	"github.com/gin-gonic/gin"
 	"github.com/spf13/cast"
 
 	"golang-microservices-mvc/services"
@@ -12,7 +12,7 @@ import (
 
 type (
 	UserControllerInterface interface {
-		GetUser(http.ResponseWriter, *http.Request)
+		GetUser(*gin.Context)
 	}
 	userController struct {
 	}
@@ -26,9 +26,9 @@ func init() {
 	UserController = &userController{}
 }
 
-func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
+func (uc *userController) GetUser(c *gin.Context) {
 	//grab the user_id
-	userIdParam := req.URL.Query().Get("user_id")
+	userIdParam := c.Param("user_id")
 	//validate the user_id
 	userId, err := cast.ToInt64E(userIdParam)
 	///
@@ -38,20 +38,14 @@ func (uc *userController) GetUser(res http.ResponseWriter, req *http.Request) {
 			StatusCode: http.StatusBadRequest,
 			Code:       "bad_request",
 		}
-		errorResp, _ := json.Marshal(apiErr)
-		res.WriteHeader(apiErr.StatusCode)
-		res.Write(errorResp)
+		c.JSON(apiErr.StatusCode, apiErr)
 		return
 	}
 	user, apiErr := services.UserService.GetUserById(userId)
 	if apiErr != nil {
-		errorResp, _ := json.Marshal(apiErr)
-		res.WriteHeader(apiErr.StatusCode)
-		res.Write(errorResp)
+		c.JSON(apiErr.StatusCode, apiErr)
 		return
 	}
 	//Marshal
-	userDto, _ := json.Marshal(user)
-	res.WriteHeader(http.StatusOK)
-	res.Write(userDto)
+	c.JSON(http.StatusOK, user)
 }
