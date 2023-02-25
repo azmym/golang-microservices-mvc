@@ -19,12 +19,9 @@ type (
 )
 
 var (
-	UserController UserControllerInterface
-)
+	UserController UserControllerInterface = &userController{}
 
-func init() {
-	UserController = &userController{}
-}
+)
 
 func (uc *userController) GetUser(c *gin.Context) {
 	//grab the user_id
