@@ -20,7 +20,6 @@ type (
 
 var (
 	UserController UserControllerInterface = &userController{}
-
 )
 
 func (uc *userController) GetUser(c *gin.Context) {
